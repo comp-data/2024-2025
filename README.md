@@ -22,7 +22,6 @@ This space contains all the material related to the [Data Science course](https:
 - _hon_ = hands-on session
 
 1. [10/2/25, *the*] Introduction to the course and final project specifications
-   - slides: [Google Slides](https://docs.google.com/presentation/d/1BxXC3jrVAPsZs8IRdh33ljbMMkfFvvVD8DzHlvJp-yw/edit?usp=sharing)
    <hr />
 
 2. [12/2/25, *the*] What is a datum and how it can be represented computationally
