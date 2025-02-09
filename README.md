@@ -105,5 +105,6 @@ This space contains all the material related to the [Data Science course](https:
 
 # Links
 
+- [Project information](https://github.com/comp-data/2024-2025/tree/main/docs/project)
 - Some complementary books on the topic:
   * [A critical field guide for working with machine learning datasets](https://knowingmachines.org/critical-field-guide)
