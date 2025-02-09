@@ -153,20 +153,20 @@ These two classes implements the method of the superclass to handle the specific
 # are contained in the file 'impl.py', then:
 
 # 1) Importing all the classes for handling the relational database
-from impl import ProcessDataUploadHandler, ProcessDataQueryHandler
+from impl import CategoryUploadHandler, CategoryQueryHandler
 
 # 2) Importing all the classes for handling graph database
-from impl import MetadataUploadHandler, MetadataQueryHandler
+from impl import JournalUploadHandler, JournalQueryHandler
 
 # 3) Importing the class for dealing with mashup queries
-from impl import AdvancedMashup
+from impl import FullQueryEngine
 
 # Once all the classes are imported, first create the relational
 # database using the related source data
 rel_path = "relational.db"
-process = ProcessDataUploadHandler()
-process.setDbPathOrUrl(rel_path)
-process.pushDataToDb("data/process.json")
+cat = CategoryUploadHandler()
+cat.setDbPathOrUrl(rel_path)
+cat.pushDataToDb("data/scimago.json")
 # Please remember that one could, in principle, push one or more files
 # calling the method one or more times (even calling the method twice
 # specifying the same file!)
@@ -174,30 +174,31 @@ process.pushDataToDb("data/process.json")
 # Then, create the graph database (remember first to run the
 # Blazegraph instance) using the related source data
 grp_endpoint = "http://127.0.0.1:9999/blazegraph/sparql"
-metadata = MetadataUploadHandler()
-metadata.setDbPathOrUrl(grp_endpoint)
-metadata.pushDataToDb("data/meta.csv")
+jou = JournalUploadHandler()
+jou.setDbPathOrUrl(grp_endpoint)
+jou.pushDataToDb("data/doaj.csv")
 # Please remember that one could, in principle, push one or more files
 # calling the method one or more times (even calling the method twice
 # specifying the same file!)
 
 # In the next passage, create the query handlers for both
 # the databases, using the related classes
-process_qh = ProcessDataQueryHandler()
-process_qh.setDbPathOrUrl(rel_path)
+cat_qh = CategoryQueryHandler()
+cat_qh.setDbPathOrUrl(rel_path)
 
-metadata_qh = MetadataQueryHandler()
-metadata_qh.setDbPathOrUrl(grp_endpoint)
+jou_qh = JournalQueryHandler()
+jou_qh.setDbPathOrUrl(grp_endpoint)
 
 # Finally, create a advanced mashup object for asking
 # about data
-mashup = AdvancedMashup()
-mashup.addProcessHandler(process_qh)
-mashup.addMetadataHandler(metadata_qh)
+que = FullQueryEngine()
+que.addCategoryHandler(cat_qh)
+que.addJournalHandler(jou_qh)
 
-result_q1 = mashup.getAllActivities()
-result_q2 = mashup.getAuthorsOfCulturalHeritageObject("1")
-result_q3 = mashup.getAuthorsOfObjectsAcquiredInTimeFrame("2023-04-01", "2023-05-01")
+result_q1 = que.getAllJournals()
+result_q2 = que.getJournalsInCategoriesWithQuartile({"Artificial Intelligence", "Oncology"}, {"Q1"})
+result_q3 = que.getEntityById("Artificial Intelligence")
+result_q4 = que.getEntityById("2532-8816")
 # etc...
 ```
 
